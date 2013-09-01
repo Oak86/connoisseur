@@ -9,14 +9,26 @@ class HtmlGenerator
 	## Anything that's not related to the output should not be in this method.
 	
 	## First, an html header needs to be printed
+	html_header =
+		p 	"<html>"
+		p 	"<head>" 
+		p 	"<title>LCBO Connoisseur</title>"
+		p   "</head>"
+		p 	"</body>"
 	## Then I need to give this content a title. We'll call it Index of Products
+	p "<h1> Index of Products </h1> "
 	## After that, I need to bring in the parsed index information
+	parsed_index
+
 	## Then I gotta loop through each item in the array and output the information.
 
-		puts products
-		products.each do |item, value|
-			p "<li> #{item} </li>"
+		parsed_index.each do |drink|
+			#Put the name of the drink as an html subhead and separate div tag
+			#Put the information of the drink
 	    end
+
+	## Then I gotta add an html footer
+	html_footer
 	end
 
 	def show(product_id)
