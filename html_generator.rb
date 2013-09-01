@@ -27,8 +27,8 @@ class HtmlGenerator
 			p "<div class = 'drink'>"
 			p "<h2></h2>"
 			#Put the information of the drink... we'll just do name and origin for now.
-			p "<p>#{name}</p>"
-			p "<p>#{tags}</p>"
+			p "<p>#{drink[name]}</p>"
+			p "<p>#{drink[tags]}</p>"
 			p "</div>"
 	    end
 
