@@ -8,7 +8,10 @@ class HtmlGenerator
 	## Index needs to display a list of products in html form.
 	## Anything that's not related to the output should not be in this method.
 	
-	## First, an htm header needs to be passed in.
+	## First, an html header needs to be printed
+	## Then I need to give this content a title. We'll call it Index of Products
+	
+
 		puts products
 		products.each do |item, value|
 			p "<li> #{item} </li>"
