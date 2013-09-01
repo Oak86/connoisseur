@@ -24,12 +24,12 @@ class HtmlGenerator
 
 		parsed_index.each do |drink|
 			#Put the name of the drink as an html subhead and separate div tag
-			p "<div class = 'drink'>"
-			p "<h2></h2>"
+			#p "<div class = 'drink'>"
+			#p "<h2></h2>"
 			#Put the information of the drink... we'll just do name and origin for now.
-			p "<p>#{drink[name]}</p>"
-			p "<p>#{drink[tags]}</p>"
-			p "</div>"
+			p "<p>#{drink['name']}</p>"
+			#p "<p>#{drink['tags']}</p>"
+			#p "</div>"
 	    end
 
 	## Then I gotta add an html footer
@@ -40,7 +40,7 @@ class HtmlGenerator
 		raw_data = open("http://lcboapi.com/products").read
 		parsed_data = JSON.parse(raw_data)
 
-		return parsed_data
+		return parsed_data['result']
 
 	end
 
@@ -63,3 +63,21 @@ end
 
 generator = HtmlGenerator.new
 generator.index
+
+
+## Some notes:
+# When I tried to run the ruby file I kept getting this error:
+	#html_generator.rb:30:in `[]': no implicit conversion of Symbol into Integer (TypeError)
+	# => from html_generator.rb:30:in `block in index'
+	#	from html_generator.rb:25:in `each'
+	#	from html_generator.rb:25:in `index'
+	#	from html_generator.rb:65:in `<main>'
+
+# I looked this up and got this link:
+# https://www.ruby-forum.com/topic/171241
+
+# The issue seems to be that ruby can't return a nil value. So I gotta account for that.
+
+# nope, I was wrong. the real reason why this wasn't working was that the method I'd created to pull data
+#was not calling on the correct hash. The loop was looking for a hash with the key "name" but all it could find 
+# was result and pager. Duh?
