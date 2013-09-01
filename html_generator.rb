@@ -1,24 +1,18 @@
 require 'json'
 require 'open-uri'
 
+## This purpose of this app is to output a fully generated HTML file based on the ARGV passed
+## in through the router.
 class HtmlGenerator
 	def index
-
 	## Index needs to display a list of products in html form.
 	## Anything that's not related to the output should not be in this method.
-		puts "HtmlGenerator: index"
-		raw_response = open("http://lcboapi.com/products").read
-
-		#Parse JSON-formatted text int oa Ruby Hash
-		parsed_response = JSON.parse(raw_response)
-
-		#Return the actual result data from the response, ignoring metadata
-		products = parsed_response["result"]
-
+	
+	## First, an htm header needs to be passed in.
 		puts products
-#		products.each do |item, value|
-#			p "<li> #{item} </li>"
-#		end
+		products.each do |item, value|
+			p "<li> #{item} </li>"
+	    end
 	end
 
 	def show(product_id)
@@ -49,7 +43,7 @@ class HtmlGenerator
 
 		#puts products
 
-		
+
 		raw_data = open("http://lcboapi.com/products").read
 		parsed_data = JSON.parse(raw_data)
 
