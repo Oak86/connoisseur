@@ -10,7 +10,8 @@ class HtmlGenerator
 	
 	## First, an html header needs to be printed
 	## Then I need to give this content a title. We'll call it Index of Products
-	
+	## After that, I need to bring in the parsed index information
+	## Then I gotta loop through each item in the array and output the information.
 
 		puts products
 		products.each do |item, value|
