@@ -18,7 +18,8 @@ class HtmlGenerator
 	## Then I need to give this content a title. We'll call it Index of Products
 		p "<h1> Index of Products </h1> "
 	## After that, I need to bring in the parsed index information
-	parsed_index = pull_data
+
+	parsed_index = pull_data("http://lcboapi.com/products")
 
 	## Then I gotta loop through each item in the array and output the information.
 
@@ -28,7 +29,7 @@ class HtmlGenerator
 			#p "<h2></h2>"
 			#Put the information of the drink... we'll just do name and origin for now.
 			p "<p>#{drink['name']}</p>"
-			#p "<p>#{drink['tags']}</p>"
+			p "<p>#{drink['tags']}</p>"
 			#p "</div>"
 	    end
 
@@ -36,11 +37,13 @@ class HtmlGenerator
 	html_footer
 	end
 
-	def pull_data
-		raw_data = open("http://lcboapi.com/products").read
+	def pull_data(url)
+		raw_data = open(url).read
 		parsed_data = JSON.parse(raw_data)
 
-		return parsed_data['result']
+		puts parsed_data['pager']
+					return parsed_data['result']
+	
 
 	end
 
@@ -62,7 +65,8 @@ class HtmlGenerator
 end
 
 generator = HtmlGenerator.new
-generator.index
+#generator.index
+generator.
 
 
 ## Some notes:
