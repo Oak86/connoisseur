@@ -1,79 +1,76 @@
 require 'json'
 require 'open-uri'
 
-## This purpose of this app is to output a fully generated HTML file based on the ARGV passed
-## in through the router.
 class HtmlGenerator
 	def index
-	## Index needs to display a list of products in html form.
-	## Anything that's not related to the output should not be in this method.
-	
-	## First, an html header needs to be printed
-	## html_header <--- This needs to become a method for later, but for now...
-		p 	"<html>"
-		p 	"	<head>" 
-		p 	"		<title>LCBO Connoisseur</title>"
-		p   "	</head>"
-		p 	"</body>"
-	## Then I need to give this content a title. We'll call it Index of Products
-		p "<h1> Index of Products </h1> "
-	## After that, I need to bring in the parsed index information
-
+	html_header
 	parsed_index = pull_data("http://lcboapi.com/products")
 
-	## Then I gotta loop through each item in the array and output the information.
-
 		parsed_index.each do |drink|
-			#Put the name of the drink as an html subhead and separate div tag
-			p "<div class = 'drink'>"
-			p "<h2>#{drink['name']}</h2>"
-			#Put info for the drink. Price and origin
-			p "<ul>"
-			p "<li>#{drink['origin']}</li>"
-			p "<li>$#{"%.2f" % (drink['price_in_cents'].to_f / 100)}</p>"
-			p "<ul>"
-			p "</div>"
+			html_body(drink)
+			# p "<div class = 'drink'>"
+			# p "<h2>#{parsed_index['name']}</h2>"
+			# p "<ul>"
+			# p "<li>#{drink['origin']}</li>"
+			# p "<li>$#{"%.2f" % (drink['price_in_cents'].to_f / 100)}</p>"
+			# p "</ul>"
+			# p "</div>"
 	    end
-
-	## Then I gotta add an html footer
 	html_footer
 	end
+
+	def show(id)
+	html_header
+	## Show needs to display the features from the product ID that has been entered.
+	## To prove that this has worked, we'll use the ID 00681, and that should return
+	## the information for Coors Light. 
+
+	parsed_index = pull_data("http://lcboapi.com/products/#{id}")
+
+	html_body(parsed_index)
+	 
+	html_footer
+	end	
+	def html_body(x)
+		p "<div class = 'drink'>"
+		p "<h2>#{x['name']}</h2>"
+		p "<ul>"
+		p "<li>#{x['origin']}</li>"
+		p "<li>$#{"%.2f" % (x['price_in_cents'].to_f / 100)}</li>"
+		p "</ul>"
+		p "</div>"
+	end	
 
 	def pull_data(url)
 		raw_data = open(url).read
 		parsed_data = JSON.parse(raw_data)
 
 		return parsed_data['result']
-
-
+		## Trying to return multiple pages... will continue this later...
 		#pager_info = parsed_data['pager']
-
 		#until pager_info['records_per_page']
-
 		#puts parsed_data['pager["records_per_page"]']
-					#puts parsed_data['result']
-	end
-
-	def show(product_id)
-
-	## Show needs to display the features from the product ID that has been entered.
-	## To prove that this has worked, we'll use the ID 00681, and that should return
-	## the information for Coors Light. 
-		
+					#puts parsed_data['result']	end
 	end
 
 	def html_header
-		##Outline the basic html header information
+		p 	"<html>"
+		p 	"<head>" 
+		p 	"<title>LCBO Connoisseur</title>"
+		p   "</head>"
+		p 	"<body>"
+		p   "<h1> Index of Products </h1> "
 	end
 
 	def html_footer
-		##Outline the basic html footer information
+		p "</body>"
+		p "</html>"	
 	end
 end
 
 generator = HtmlGenerator.new
 generator.index
-#generator.pull_data("http://lcboapi.com/products")
+#generator.show(300681)
 
 
 ## Some notes:
