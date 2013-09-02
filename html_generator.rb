@@ -21,13 +21,13 @@ class HtmlGenerator
 
 private
 	def html_body(x)
-		p "<div class = 'drink'>"
-		p "<h2>#{x['name']}</h2>"
-		p "<ul>"
-		p "<li>#{x['origin']}</li>"
-		p "<li>$#{"%.2f" % (x['price_in_cents'].to_f / 100)}</li>"
-		p "</ul>"
-		p "</div>"
+		puts "<div class = 'drink'>"
+		puts "<h2>#{x['name']}</h2>"
+		puts "<ul>"
+		puts "<li>#{x['origin']}</li>"
+		puts "<li>$#{"%.2f" % (x['price_in_cents'].to_f / 100)}</li>"
+		puts "</ul>"
+		puts "</div>"
 	end	
 
 	def pull_data(url)
@@ -43,17 +43,17 @@ private
 	end
 
 	def html_header
-		p 	"<html>"
-		p 	"<head>" 
-		p 	"<title>LCBO Connoisseur</title>"
-		p   "</head>"
-		p 	"<body>"
-		p   "<h1> Index of Products </h1> "
+		puts "<html>"
+		puts "<head>" 
+		puts "<title>LCBO Connoisseur</title>"
+		puts "</head>"
+		puts "<body>"
+		puts "<h1> Index of Products </h1> "
 	end
 
 	def html_footer
-		p "</body>"
-		p "</html>"	
+		puts "</body>"
+		puts "</html>"	
 	end
 end
 
