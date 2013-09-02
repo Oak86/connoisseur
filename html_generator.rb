@@ -4,33 +4,22 @@ require 'open-uri'
 class HtmlGenerator
 	def index
 	html_header
-	parsed_index = pull_data("http://lcboapi.com/products")
+	json_array = pull_data("http://lcboapi.com/products")
 
-		parsed_index.each do |drink|
-			html_body(drink)
-			# p "<div class = 'drink'>"
-			# p "<h2>#{parsed_index['name']}</h2>"
-			# p "<ul>"
-			# p "<li>#{drink['origin']}</li>"
-			# p "<li>$#{"%.2f" % (drink['price_in_cents'].to_f / 100)}</p>"
-			# p "</ul>"
-			# p "</div>"
-	    end
+	json_array.each do |drink|
+		html_body(drink)
+    	end
 	html_footer
 	end
 
 	def show(id)
 	html_header
-	## Show needs to display the features from the product ID that has been entered.
-	## To prove that this has worked, we'll use the ID 00681, and that should return
-	## the information for Coors Light. 
-
-	parsed_index = pull_data("http://lcboapi.com/products/#{id}")
-
-	html_body(parsed_index)
-	 
+		result_hash = pull_data("http://lcboapi.com/products/#{id}")
+		html_body(result_hash)	 
 	html_footer
-	end	
+	end
+
+private
 	def html_body(x)
 		p "<div class = 'drink'>"
 		p "<h2>#{x['name']}</h2>"
@@ -68,8 +57,8 @@ class HtmlGenerator
 	end
 end
 
-generator = HtmlGenerator.new
-generator.index
+#generator = HtmlGenerator.new
+#generator.index
 #generator.show(300681)
 
 
